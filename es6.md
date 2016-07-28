@@ -1,5 +1,7 @@
 # ES6
 
+Source: https://hacks.mozilla.org/category/es6-in-depth/
+
 ## for-of
 ```
 for (VAR of ITERABLE) {
@@ -145,3 +147,56 @@ function returnMultipleValues() {
 }
 var { foo, bar } = returnMultipleValues();
 ```
+## arrow functions
+Automatically binds lexically scoped `this`
+```
+var selected = allJobs.filter(job => job.isSelected());
+var total = values.reduce((a, b) => a + b, 0);
+var chewToys = puppies.map(puppy => ({})); // ok
+$("#confetti-btn").click(event => {
+  playTrumpet();
+  fireConfettiCannon();
+});
+```
+## symbols
+Symbols are values that programs can create and use as property keys without risking name collisions.
+```
+var mySymbol = Symbol();
+```
+Can share symbols by using a string key.
+```
+Symbol.for("cat") // Always returns same Symbol
+```
+## collections
+Iteration is done in insertion order.
+### Set
+```
+new Set()
+new Set(iterable);
+Set.prototype.add(value)
+Set.prototype.clear()
+Set.prototype.delete(value)
+Set.prototype.entries()
+Set.prototype.forEach() // f(value, value, set)
+Set.prototype.has(value)
+Set.prototype.values()
+Set.prototype.size()
+Set.prototype[@@iterator]()
+```
+### Map
+```
+new Map()
+new Map(iterable) // Iterable of [key, value]
+Map.prototype.clear()
+Map.prototype.delete(key)
+Map.prototype.entries()
+Map.prototype.forEach() // f(value, key, map)
+Map.prototype.get(key)
+Map.prototype.has(key)
+Map.prototype.keys()
+Map.prototype.set(key, value)
+Map.prototype.values()
+Map.prototype.size()
+Map.prototype[@@iterator]()
+```
+
