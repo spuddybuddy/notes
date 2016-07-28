@@ -253,3 +253,60 @@ class Circle extends Shape {
   // As above
 }
 ```
+## [let and const](https://hacks.mozilla.org/2015/07/es6-in-depth-let-and-const/)
+### let
+`let` is a sane, lexically scoped replacement for `var`.
+* `let` is block scoped
+* `let` variable declared in a loop is rebound on each loop iteration (okay to capture in closures)
+* `let` variable cannot be redeclared
+* `let` variable cannot be accessed before declaration
+* `let` declarations do not create properties on the global object
+
+### const
+A `let` variable assigned only at declaration.
+## [modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+`export` determines what declarations are available to other modules.
+You can export any top-level function, class, var, let, or const.
+```
+export function detectCats(canvas, options) {
+  var kittydar = new Kittydar(options);
+  return kittydar.detectCats(canvas);
+}
+
+export class Kittydar {
+  ... several methods doing image processing ...
+}
+
+// This helper function isn't exported.
+function resizeCanvas() {
+  ...
+}
+```
+`import` brings in exported declarations from another file.
+```
+import {detectCats, Kittydar} from "kittydar.js";
+
+function go() {
+  var canvas = document.getElementById("catpix");
+  var cats = detectCats(canvas);
+  drawRectangles(canvas, cats);
+}
+
+// Import all declarations.
+import * as cows from "cows";
+```
+`export` can re-export declarations.
+```
+// import "sri-lanka" and re-export some of its exports
+export {Tea, Cinnamon} from "sri-lanka";
+
+// import "equatorial-guinea" and re-export some of its exports
+export {Coffee, Cocoa} from "equatorial-guinea";
+
+// import "singapore" and export ALL of its exports
+export * from "singapore";
+```
+If you want to lazy-load imports, arrange modules into bundles, etc. then you'll need library and tool support.
+e.g. http://webpack.github.io/docs/
+
+
