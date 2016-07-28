@@ -2,7 +2,7 @@
 
 Source: https://hacks.mozilla.org/category/es6-in-depth/
 
-## for-of
+## [for-of](https://hacks.mozilla.org/2015/04/es6-in-depth-iterators-and-the-for-of-loop/)
 ```
 for (VAR of ITERABLE) {
   STATEMENTS
@@ -16,7 +16,7 @@ for (var [key, value] of phoneBookMap) {
   console.log(key + "'s phone number is: " + value);
 }
 ```
-## iterators
+## [iterators](https://hacks.mozilla.org/2015/04/es6-in-depth-iterators-and-the-for-of-loop/)
 ```
 var zeroesForeverIterator = {
   [Symbol.iterator]: function () {
@@ -33,8 +33,8 @@ var zeroesForeverIterator = {
   return: function() { DO CLEANUP }
   throw: function(exc) { ??? }
 ```
-## generators
-iterator generating function.
+## [generators](https://hacks.mozilla.org/2015/05/es6-in-depth-generators/)
+Iterator generating function.
 ```
 function* range(start, stop) {
   for (var i = start; i < stop; i++)
@@ -45,8 +45,8 @@ for (var value of range(start, stop)) {
   alert("Ding! at floor #" + value);
 }
 ```
-[Q.async](http://jlongster.com/A-Study-on-Solving-Callbacks-with-JavaScript-Generators): interesting (experimental) way to write asynchronous code by iterative continuation passing.
-## template strings
+Can use generators to coordinate with asynchronous operations in the caller by passing values to next().  See: https://hacks.mozilla.org/2015/07/es6-in-depth-generators-continued/
+## [template strings](https://hacks.mozilla.org/2015/05/es6-in-depth-template-strings-2/)
 Within backtick strings, include `${EXPR}` to implement string interpolation. `EXPR` will be evaluated and coerced to string. 
 ```
 function authorize(user, action) {
@@ -56,7 +56,7 @@ function authorize(user, action) {
   }
 }
 ```
-## rest parameters & defaults
+## [rest parameters & defaults](https://hacks.mozilla.org/2015/05/es6-in-depth-rest-parameters-and-defaults/)
 ```
 function containsAll(haystack, ...needles) {
   for (var needle of needles) {
@@ -74,7 +74,7 @@ function animalSentence(animals2="tigers", animals3="bears") {
 }
 ```
 Defaults evaluated left-to-right at call-time.  Can be expressions.  Dynamically scoped?
-## destructuring
+## [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
 ```
 var [first, second, third] = someArray;
 
@@ -147,7 +147,7 @@ function returnMultipleValues() {
 }
 var { foo, bar } = returnMultipleValues();
 ```
-## arrow functions
+## [arrow functions](https://hacks.mozilla.org/2015/06/es6-in-depth-arrow-functions/)
 Automatically binds lexically scoped `this`
 ```
 var selected = allJobs.filter(job => job.isSelected());
@@ -158,7 +158,7 @@ $("#confetti-btn").click(event => {
   fireConfettiCannon();
 });
 ```
-## symbols
+## [symbols](https://hacks.mozilla.org/2015/06/es6-in-depth-symbols/)
 Symbols are values that programs can create and use as property keys without risking name collisions.
 ```
 var mySymbol = Symbol();
@@ -167,7 +167,8 @@ Can share symbols by using a string key.
 ```
 Symbol.for("cat") // Always returns same Symbol
 ```
-## collections
+## [collections](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
+
 Iteration is done in insertion order.
 ### Set
 ```
@@ -199,4 +200,56 @@ Map.prototype.values()
 Map.prototype.size()
 Map.prototype[@@iterator]()
 ```
+## [proxies](https://hacks.mozilla.org/2015/07/es6-in-depth-proxies-and-reflect/)
+Reflection API, for metaprogramming and customizing property access and method calls.  Useful for logging, mocking, debugging.
+## [classes](https://hacks.mozilla.org/2015/07/es6-in-depth-classes/)
+```
+class Circle {
+    constructor(radius) {
+        this.radius = radius;
+        Circle.circlesMade++;
+    };
 
+    static draw(circle, canvas) {
+        // Canvas drawing code
+    };
+
+    static get circlesMade() {
+        return !this._count ? 0 : this._count;
+    };
+    static set circlesMade(val) {
+        this._count = val;
+    };
+
+    area() {
+        return Math.pow(this.radius, 2) * Math.PI;
+    };
+
+    get radius() {
+        return this._radius;
+    };
+    set radius(radius) {
+        if (!Number.isInteger(radius))
+            throw new Error("Circle radius must be an integer.");
+        this._radius = radius;
+    };
+}
+```
+## [subclassing](https://hacks.mozilla.org/2015/08/es6-in-depth-subclassing/)
+`Foo extends Bar` sets prototype of Bar to Foo and sets prototype of Bar.prototype to Foo.prototype.
+`super` is used to access the prototype of the superclass.
+```
+class Shape {
+    get color() {
+        return this._color;
+    }
+    set color(c) {
+        this._color = parseColorAsRGB(c);
+        this.markChanged();  // repaint the canvas later
+    }
+}
+
+class Circle extends Shape {
+  // As above
+}
+```
